@@ -1,6 +1,34 @@
+GIT
+  remote: git://github.com/intridea/omniauth-contrib.git
+  revision: d6d4859122736d53542e0f097072c5a967e0223d
+  specs:
+    omniauth-contrib (1.0.0.alpha)
+      multi_json
+      omniauth (~> 1.0.0.alpha)
+      omniauth-oauth (~> 1.0.0.alpha)
+
+GIT
+  remote: git://github.com/intridea/omniauth-oauth.git
+  revision: f1926a3cc257b22ba668c5b15ef45d4fc6f786c5
+  specs:
+    omniauth-oauth (1.0.0.alpha)
+      oauth
+      omniauth (~> 1.0.0.alpha)
+
+GIT
+  remote: git://github.com/intridea/omniauth.git
+  revision: 5d2c3deb6a767aa2e5366ad9e4533ded8d82cb69
+  specs:
+    omniauth (1.0.0.alpha)
+      hashie
+      rack
+
 GEM
   remote: http://rubygems.org/
   specs:
+    hashie (1.1.0)
+    multi_json (1.0.3)
+    oauth (0.4.5)
     rack (1.3.4)
     rack-protection (1.1.4)
       rack
@@ -14,4 +42,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  omniauth!
+  omniauth-contrib!
+  omniauth-oauth!
   sinatra

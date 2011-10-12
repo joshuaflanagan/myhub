@@ -1,2 +1,5 @@
 source 'http://rubygems.org'
 gem 'sinatra'
+gem 'omniauth', :git => 'git://github.com/intridea/omniauth.git'
+gem 'omniauth-oauth', :git => 'git://github.com/intridea/omniauth-oauth.git'
+gem 'omniauth-contrib', :git => 'git://github.com/intridea/omniauth-contrib.git'
