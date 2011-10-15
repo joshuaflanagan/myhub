@@ -44,7 +44,7 @@ get '/' do
 end
 
 get '/github' do
-  "Token: #{user_token}"
+  erb :github
 end
 
 get '/auth/github/callback' do

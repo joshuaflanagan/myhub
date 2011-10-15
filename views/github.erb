@@ -1,0 +1,39 @@
+<!doctype html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>MyHub</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+</head>
+
+<body>
+  <header>
+  MyHub
+  </header>
+  <div role="main">
+    Organizations
+    <ul id="organizations">
+    </ul>
+  </div>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+  <script src="//raw.github.com/janl/mustache.js/817e884f60c0600b78ffb16c423513bd9dcde394/mustache.js"></script>
+  <script>
+    var token = '<%= user_token %>';
+    var github_url = 'https://api.github.com';
+
+    var github = function(resource, callback){
+      $.getJSON(github_url + resource, {access_token: token}, callback);
+    };
+
+    var org_list = '{{#orgs}}<li><a href="{{url}}"><img src="{{avatar_url}}">{{login}}</a></li>{{/orgs}}';
+
+    $(function(){
+      var orgs = $('#organizations');
+      github('/user/orgs', function(data){
+        var html = Mustache.to_html(org_list, {orgs: data});
+        orgs.append(html);
+      });
+    });
+  </script>
+</body>
+</html>
