@@ -56,6 +56,11 @@ get '/auth/github/callback' do
   # request.env['omniauth.auth'].to_hash.inspect
 end
 
+get '/auth/failure' do
+  content_type 'text/plain'
+  "Failed to authenticate: #{params[:message]}"
+end
+
 get '/logout' do
   session["user_token"] = nil
   redirect '/'
