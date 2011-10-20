@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <script>
     var token = '<%= user_token %>';
-    var github_url = 'https://api.github.com';
   </script>
 </head>
 
@@ -14,10 +13,7 @@
   <header>
   MyHub
   </header>
-  <div role="main">
-    Organizations
-    <ul id="organizations">
-    </ul>
+  <div id="page-holder" role="main">
   </div>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
   <script src="//raw.github.com/janl/mustache.js/817e884f60c0600b78ffb16c423513bd9dcde394/mustache.js"></script>
