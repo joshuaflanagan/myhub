@@ -8,6 +8,8 @@
 var myHub = function(authenticatedUser, page){
   var self = this;
   page = $(page);
+  this.el = page;
+  this.org = null;
 
   var templ = function(view){
     return $("#view-" + view).html();
@@ -37,18 +39,23 @@ var myHub = function(authenticatedUser, page){
     });
   };
 
+  page.bind("org-selected", function(evt, orgLogin, orgUrl){
+    self.org = {name: orgLogin, url: orgUrl};
+    self.load_org(self.org);
+  });
+
   this.show_orgs = function(data){
     var html = bind_templ("org-list", {orgs: data});
     page.html(html);
     $("a", page).click(function(e){
       e.preventDefault();
       var orgUrl = $(this).attr('href');
-      var orgName = $(this).text();
-      self.select_org({name: orgName, url: orgUrl});
+      var orgLogin = $(this).text();
+      page.trigger("org-selected", [orgLogin, orgUrl]);
     });
   };
 
-  this.select_org = function(org){
+  this.load_org = function(org){
     $.when( github(org.url + '/repos'),
            github(org.url + '/teams'),
            github(org.url + '/members')
