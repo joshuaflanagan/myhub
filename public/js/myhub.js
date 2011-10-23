@@ -1,7 +1,15 @@
 var github = function(resource, callback){
   var github_url = 'https://api.github.com';
   var url = resource.slice(0, 4) == 'http' ? resource : github_url + resource;
-  return $.getJSON(url, {access_token: token}, callback);
+  var headers = {
+    "Authorization" : "token " + token
+  };
+  return $.ajax({
+    url: url,
+    dataType: "json",
+    success: callback,
+    headers: headers
+  });
 };
 
 $(function(){
