@@ -19,4 +19,38 @@
   <script src="//raw.github.com/janl/mustache.js/817e884f60c0600b78ffb16c423513bd9dcde394/mustache.js"></script>
   <script src="js/myhub.js"></script>
 </body>
+<script type="text/template" id="view-org-list">
+  <h3>Organizations</h3>
+  <ul>
+    {{#orgs}}
+    <li><a href="{{url}}">
+        <img src="{{avatar_url}}">{{login}}</a>
+    </li>
+    {{/orgs}}
+  </ul>
+</script>
+<script type="text/template" id="view-org">
+  <h3>{{org_name}}</h3>
+
+  <h4>Repositories</h4>
+  <ul>
+    {{#repos}}
+    <li>{{name}}</li>
+    {{/repos}}
+  </ul>
+
+  <h4>Teams</h4>
+  <ul>
+    {{#teams}}
+    <li>{{name}}</li>
+    {{/teams}}
+  </ul>
+
+  <h4>Members</h4>
+  <ul>
+    {{#members}}
+    <li>{{login}}</li>
+    {{/members}}
+  </ul>
+</script>
 </html>

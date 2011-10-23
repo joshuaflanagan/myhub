@@ -4,21 +4,23 @@ var github = function(resource, callback){
   return $.getJSON(url, {access_token: token}, callback);
 };
 
-var org_list = '<h3>Organizations</h3><ul>{{#orgs}}<li><a href="{{url}}"><img src="{{avatar_url}}">{{login}}</a></li>{{/orgs}}</ul>';
-var org_display = '<h3>{{org_name}}</h3>' +
-  '<ul>{{#repos}}<li>{{name}}</li>{{/repos}}</ul>' +
-  '<ul>{{#teams}}<li>{{name}}</li>{{/teams}}</ul>' +
-  '<ul>{{#members}}<li>{{login}}</li>{{/members}}</ul>';
-
 $(function(){
   github('/user/orgs', function(data){
     show_orgs(data);
   });
 });
 
+var templ = function(view){
+  return $("#view-" + view).html();
+};
+
+var bind_templ = function(view, model){
+  return Mustache.to_html(templ(view), model);
+};
+
 var show_orgs = function(data){
   var page_holder = $('#page-holder');
-  var html = Mustache.to_html(org_list, {orgs: data});
+  var html = bind_templ("org-list", {orgs: data});
   page_holder.html(html);
   $("a", page_holder).click(function(e){
     e.preventDefault();
@@ -39,7 +41,7 @@ var select_org = function(org){
 
 var show_org_details = function(org, repos, teams, members){
   var page_holder = $('#page-holder');
-  var html = Mustache.to_html(org_display, {
+  var html = bind_templ("org", {
     org_name: org.name,
     repos: repos,
     teams: teams,
