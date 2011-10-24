@@ -35,28 +35,28 @@
     {{/orgs}}
   </ul>
 </script>
-<script type="text/template" id="view-org">
-  <h3>{{org_name}}</h3>
 
-  <h4>Repositories</h4>
-  <ul>
-    {{#repos}}
-    <li>{{name}}</li>
-    {{/repos}}
-  </ul>
-
-  <h4>Teams</h4>
-  <ul>
-    {{#teams}}
-    <li>{{name}}</li>
-    {{/teams}}
-  </ul>
-
+<script type="text/template" id="view-user-selection">
+  <h3>Managing {{login}}</h3>
+  <input type="text" name="username">
   <h4>Members</h4>
   <ul>
     {{#members}}
-    <li>{{login}}</li>
+    <li>
+      <a href="{{url}}"><img src="{{avatar_url}}">{{login}}</a>
+    </li>
     {{/members}}
   </ul>
 </script>
+
+<script type="text/template" id="view-manage-user">
+  <h3>Managing {{user_login}} at {{org_login}}</h3>
+  <h4>Org Repositories</h4>
+  <ul>
+    {{#org_repos}}
+    <li>{{name}}</li>
+    {{/org_repos}}
+  </ul>
+</script>
+
 </html>
