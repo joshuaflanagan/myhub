@@ -1,5 +1,26 @@
 (function($){
 
+
+window.Organization = function(login, url){
+  var self = this;
+  this.login = login;
+  this.url = url;
+
+  //TODO: TDD this functionality
+  this.project_for_user = function(user){
+    var repos = _.map(self.repos, function(repo){
+      return {
+        name: repo.name,
+        member: (Math.floor(Math.random()*2)) == 1
+      };
+    });
+
+    return {
+      repos: repos
+    };
+  };
+};
+
 // This is the main application logic
 //  authenticatedUser: Should have a token property with
 //                     a valid GitHub OAuth access token.
@@ -34,6 +55,7 @@ var myHub = function(authenticatedUser, page){
     });
   };
 
+  // main entry point
   this.manageOrgs = function(){
     github('/user/orgs', function(data){
       self.show_orgs(data);
@@ -41,9 +63,10 @@ var myHub = function(authenticatedUser, page){
   };
 
   page.bind('org-selected', function(evt, orgLogin, orgUrl){
-    self.org = {login: orgLogin, url: orgUrl};
+    self.org = new Organization(orgLogin, orgUrl);
     var loading_org = self.load_org(self.org);
     loading_org.done(function(){
+      self.load_org_teams(self.org);
       self.show_user_selection();
     });
   });
@@ -57,6 +80,7 @@ var myHub = function(authenticatedUser, page){
   });
 
   this.show_orgs = function(data){
+    //TODO: filter down to just the orgs the auth user is an owner
     var html = bind_templ('org-list', {orgs: data});
     page.html(html);
     $('a', page).click(function(e){
@@ -78,6 +102,25 @@ var myHub = function(authenticatedUser, page){
           });
   };
 
+  this.load_org_teams = function(org){
+    org.team_details = {};
+    var teamLoaders = _.map(org.teams, function(team){
+      return $.when(
+        github('/teams/' + team.id),
+        github('/teams/' + team.id + '/repos'),
+        github('/teams/' + team.id + '/members')
+      ).done(function(t, r, m){
+        var team = t[0];
+        team.repos = r[0];
+        team.members = m[0];
+        org.team_details[team.id] = team;
+      });
+    });
+    org.loading = $.when.apply($, teamLoaders).done(function(){
+      console.log("loaded all the team data");
+    });
+  };
+
   this.load_user = function(user){
     return $.when(user);
   };
@@ -94,10 +137,11 @@ var myHub = function(authenticatedUser, page){
   };
 
   this.show_manage_user = function(){
+    var orgForUser = self.org.project_for_user(self.managedUser);
     var page_data = {
       user_login: self.managedUser.login,
       org_login: self.org.login,
-      org_repos: self.org.repos
+      user_repos: orgForUser.repos
     };
     var html = bind_templ('manage-user', page_data);
     page.html(html);
