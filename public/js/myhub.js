@@ -6,8 +6,19 @@ window.Organization = function(login, url){
   this.login = login;
   this.url = url;
 
+  this.user_teams = function(user){
+    var filtered = _.filter(self.team_details, function(t) {
+      return _.any(t.members, function(m){ return m.login === user.login;});
+    });
+    return _.map(filtered, function(t){ return t.id; });
+  };
+
   //TODO: TDD this functionality
-  this.project_for_user = function(user){
+  this.user_view = function(user){
+    // determine the teams the user belongs to
+    // combine with full org team list, to show teams not a member of
+    // determine the repos the user belongs to, and the highest permission
+    // combine with full org repo list, to show repos not a member of
     var repos = _.map(self.repos, function(repo){
       return {
         name: repo.name,
@@ -137,7 +148,7 @@ var myHub = function(authenticatedUser, page){
   };
 
   this.show_manage_user = function(){
-    var orgForUser = self.org.project_for_user(self.managedUser);
+    var orgForUser = self.org.user_view(self.managedUser);
     var page_data = {
       user_login: self.managedUser.login,
       org_login: self.org.login,
