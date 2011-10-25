@@ -1,0 +1,9 @@
+use_webkit = !Gem::Specification.find_all_by_name('capybara-webkit').empty?
+require 'capybara-webkit' if use_webkit
+
+Evergreen.configure do |config|
+  config.driver = Capybara.drivers.include?(:webkit) ? :webkit : :selenium
+  config.public_dir = 'public/js'
+  config.template_dir = 'spec/js/templates'
+  config.spec_dir = 'spec/js'
+end
