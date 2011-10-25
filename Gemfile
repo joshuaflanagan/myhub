@@ -7,4 +7,5 @@ gem 'omniauth-contrib', :git => 'git://github.com/intridea/omniauth-contrib.git'
 
 group :test do
   gem 'evergreen',  :git => 'git://github.com/jnicklas/evergreen.git', :submodules => true
+  gem 'capybara-webkit'
 end
