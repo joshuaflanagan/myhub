@@ -31,6 +31,18 @@ GIT
       hashie
       rack
 
+GIT
+  remote: git://github.com/jnicklas/evergreen.git
+  revision: 1ee911f82e40d4b51c17242b4431b0ad054920a1
+  submodules: true
+  specs:
+    evergreen (1.0.0.rc)
+      capybara (~> 1.0)
+      coffee-script
+      json_pure
+      launchy
+      sinatra (~> 1.1)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -48,12 +60,6 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.1.2)
-    evergreen (0.4.1)
-      capybara (~> 1.0)
-      coffee-script
-      json_pure
-      launchy
-      sinatra (~> 1.1)
     execjs (1.2.9)
       multi_json (~> 1.0)
     faraday (0.7.5)
@@ -96,7 +102,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  evergreen
+  evergreen!
   omniauth!
   omniauth-contrib!
   omniauth-oauth!

@@ -6,5 +6,5 @@ gem 'omniauth-oauth2', :git => 'git://github.com/intridea/omniauth-oauth2.git'
 gem 'omniauth-contrib', :git => 'git://github.com/intridea/omniauth-contrib.git'
 
 group :test do
-  gem 'evergreen'
+  gem 'evergreen',  :git => 'git://github.com/jnicklas/evergreen.git', :submodules => true
 end
