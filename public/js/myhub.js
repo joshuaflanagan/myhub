@@ -13,6 +13,15 @@ window.Organization = function(login, url){
     return _.map(filtered, function(t){ return t.id; });
   };
 
+  this.user_repos = function(user){
+    var teams = self.user_teams(user);
+    return _.reduce(teams, function(userRepos, teamId){
+      var teamRepos = _.map(self.team_details[teamId].repos,
+                            function(repo){ return repo.id; });
+      return _.union(userRepos, teamRepos);
+    }, []);
+  };
+
   //TODO: TDD this functionality
   this.user_view = function(user){
     // determine the teams the user belongs to
