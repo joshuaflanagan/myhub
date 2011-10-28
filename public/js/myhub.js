@@ -34,16 +34,14 @@ window.Organization = function(login, url){
     return userRepos;
   };
 
-  //TODO: TDD this functionality
   this.user_view = function(user){
-    // determine the teams the user belongs to
-    // combine with full org team list, to show teams not a member of
-    // determine the repos the user belongs to, and the highest permission
-    // combine with full org repo list, to show repos not a member of
+    var uTeams = self.user_teams(user);
+    var uRepos = self.user_repos(user, uTeams);
     var repos = _.map(self.repos, function(repo){
       return {
+        id: repo.id,
         name: repo.name,
-        member: (Math.floor(Math.random()*2)) == 1
+        permission: uRepos[repo.id] || null
       };
     });
 
