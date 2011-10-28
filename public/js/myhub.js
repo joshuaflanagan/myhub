@@ -6,6 +6,16 @@ window.Organization = function(login, url){
   this.login = login;
   this.url = url;
 
+  var PERMISSIONS = {
+    'pull' : 1,
+    'push' : 2,
+    'admin': 3
+  };
+
+  var maxPerm = function(x, y){
+    return PERMISSIONS[x] > PERMISSIONS[y] ? x : y;
+  };
+
   this.user_teams = function(user){
     var filtered = _.filter(self.team_details, function(t) {
       return _.any(t.members, function(m){ return m.login === user.login;});
@@ -13,13 +23,15 @@ window.Organization = function(login, url){
     return _.map(filtered, function(t){ return t.id; });
   };
 
-  this.user_repos = function(user){
-    var teams = self.user_teams(user);
-    return _.reduce(teams, function(userRepos, teamId){
-      var teamRepos = _.map(self.team_details[teamId].repos,
-                            function(repo){ return repo.id; });
-      return _.union(userRepos, teamRepos);
-    }, []);
+  this.user_repos = function(user, teams){
+    var userRepos = {};
+    _.each(teams, function(teamId){
+      var perm = self.team_details[teamId].permission;
+      _.each(self.team_details[teamId].repos, function(r){
+        userRepos[r.id] = maxPerm(userRepos[r.id], perm);
+      });
+    });
+    return userRepos;
   };
 
   //TODO: TDD this functionality
