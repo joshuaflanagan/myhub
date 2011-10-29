@@ -37,9 +37,10 @@ end
 
 get '/' do
   <<-HTML
-  <ul>
-    <li><a href='/github'>Explore GitHub</a></li>
-  </ul>
+<!doctype html>
+  <html lang="en"><head><link rel="stylesheet" href="css/style.css"></head><body id="landing">
+    <div><a href='/github'>Sign in to GitHub</a></div>
+  </body></html>
   HTML
 end
 
